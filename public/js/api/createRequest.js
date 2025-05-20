@@ -22,13 +22,14 @@ const createRequest = (options = {}) => {
     }
   }
 
+  request.open(options.method, options.url, true);
+
   request.onload = () => {
     if (request.status >= 200 && request.status < 300) {
       options.callback(null, request.response);
     }
   };
 
-  request.open(options.method, options.url, true);
   try {
     request.send(requestData);
   } catch (err) {

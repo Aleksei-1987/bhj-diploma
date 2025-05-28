@@ -40,12 +40,10 @@ class AsyncForm {
    * }
    * */
   getData() {
-    const form = this.element.querySelector("form");
-    const formData = new FormData(form);
-    entries = formData.entries();
+    const formData = new FormData(this.element);
     const result = {};
 
-    for (let item of entries) {
+    for (let item of formData.entries()) {
       result[item[0]] = item[1];
     }
 

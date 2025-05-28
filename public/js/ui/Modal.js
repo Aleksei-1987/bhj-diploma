@@ -13,7 +13,7 @@ class Modal {
    * */
   constructor(element) {
     if (!element) {
-      throw new Error("Элемент не существует");
+      throw new Error("Error: элемент не существует");
     }
 
     this.element = element;

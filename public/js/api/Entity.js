@@ -11,7 +11,7 @@ static URL = "";
    * (в зависимости от того, что наследуется от Entity)
    * */
   static list(data, callback) {
-    return createRequest({
+    createRequest({
       method: "GET",
       url: this.URL,
       data,
@@ -25,7 +25,7 @@ static URL = "";
    * что наследуется от Entity)
    * */
   static create(data, callback) {
-    return createRequest({
+    createRequest({
       method: "PUT",
       url: this.URL,
       data,
@@ -38,7 +38,7 @@ static URL = "";
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(data, callback) {
-    return createRequest({
+    createRequest({
       method: "DELETE",
       url: this.URL,
       data,

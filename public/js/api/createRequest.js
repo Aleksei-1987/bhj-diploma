@@ -5,36 +5,36 @@
 const createRequest = (options = {}) => {
   const request = new XMLHttpRequest();
 
+  let url = options.url;
   let requestData = options.data;
-
+  const method = options.method;
   request.responseType = "json";
 
-  if (options.method === "GET") {
-    const params = new URLSearchParams();
+  if (method === "GET") {
+    const data = new URLSearchParams();
     for (const key in requestData) {
-      params.append(key, requestData[key]);
+      data.append(key, requestData[key]);
     }
-    options.url += "?" + params.toString();
+
+    url += "?" + data.toString();
+
+    request.open(method, url);
+    request.send();
   } else {
     requestData = new FormData();
     for (const key in options.data) {
       requestData.append(key, options.data[key]);
     }
+    request.open(method, url);
+    request.send(requestData);
   }
-
-  request.open(options.method, options.url, true);
 
   request.onload = () => {
     if (request.status >= 200 && request.status < 300) {
       options.callback(null, request.response);
+    } else {
+      options.callback(err);
     }
   };
-
-  try {
-    request.send(requestData);
-  } catch (err) {
-    options.callback(err, null);
-  }
-
-  return request;
 };
+

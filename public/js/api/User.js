@@ -45,8 +45,8 @@ class User {
           this.setCurrent(response.user);
         } else {
           this.unsetCurrent();
-          callback(err, response);
         }
+        callback(err, response);
       },
     });
   }
@@ -66,6 +66,8 @@ class User {
       callback: (err, response) => {
         if (response && response.user) {
           this.setCurrent(response.user);
+        } else {
+          this.unsetCurrent();
         }
         callback(err, response);
       },
@@ -79,19 +81,15 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
-    if (!data?.email || !data?.password) {
-      return callback(new Error("Не заполнены обязательные поля"));
-    }
-
     createRequest({
       url: this.URL + "/register",
       method: "POST",
-      responseType: "json",
       data,
       callback: (err, response) => {
-        console.log("Register response:", response);
-        if (response?.user) {
+        if (response.success) {
           this.setCurrent(response.user);
+        } else {
+          this.unsetCurrent();
         }
         callback(err, response);
       },

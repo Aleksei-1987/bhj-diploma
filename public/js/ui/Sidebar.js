@@ -36,26 +36,28 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-    document.addEventListener("click", (e) => {
+    const registerBtn = document.querySelector(".menu-item_register");
+    registerBtn.addEventListener("click", (e) => {
       e.preventDefault();
-
-      if (e.target.closest(".menu-item_login")) {
-        App.getModal("login").open();
-      }
-
-      if (e.target.closest(".menu-item_register")) {
-        App.getModal("register").open();
-      }
-
-      if (e.target.closest(".menu-item_logout")) {
-        User.logout((err, response) => {
-          if (response && response.success) {
-            App.setState("init");
-          } else {
-            console.error("Ошибка выхода:", err);
-          }
-        });
-      }
+      App.getModal("register").open();
     });
+
+    const loginBtn = document.querySelector(".menu-item_login");
+    loginBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      App.getModal("login").open();
+    })
+
+    const logoutBtn = document.querySelector(".menu-item_logout");
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      User.logout((error, response) => {
+        if(response.success){
+          App.setState("init")
+        } else {
+          return;
+        }
+      })
+    })
   }
 }
